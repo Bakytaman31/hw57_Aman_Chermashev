@@ -14,46 +14,22 @@ class App extends Component {
   textChange = event =>{this.setState({text: event.target.value})};
   priceChange = event => {this.setState({price: parseInt(event.target.value)});};
 
-  totalSpentAdd = () => {
-      const total = this.state.stuff.reduce((acc, item) => {
-      acc+=item.price;
-      return acc
-    }, this.state.totalSpent);
-      console.log(this.state.price);
-      console.log(total);
-      this.setState({totalSpent: total})
-
-  };
-
-  totalSpentRemove = () =>{
-    const total = this.state.stuff.reduce((acc, item) => {
-      acc-=item.price;
-      return acc
-    }, this.state.totalSpent);
-
-    console.log(this.state.price);
-    console.log(total);
-    this.setState({totalSpent: total})
-  };
   add = () =>{
     const newStuff = {
       name: this.state.text,
       price: this.state.price,
       id: nanoid(),
     };
-    this.setState({stuff: [...this.state.stuff, newStuff]});
-    this.totalSpentAdd();
-    document.getElementById("text").value = "";
-    document.getElementById("price").value = "";
-
+    const totalSpent = this.state.totalSpent += this.state.price;
+    this.setState({stuff: [...this.state.stuff, newStuff], totalSpent, text: '', price: 0});
   };
 
   remove = id => {
     const stuffId = this.state.stuff.findIndex(t => t.id === id);
     const stuff = [...this.state.stuff];
+    let totalSpent = this.state.totalSpent - stuff[stuffId].price;
     stuff.splice(stuffId, 1);
-    this.setState({stuff});
-    this.totalSpentRemove();
+    this.setState({stuff: stuff, totalSpent: totalSpent});
   };
 
 
@@ -74,7 +50,7 @@ class App extends Component {
             <input type="text" placeholder="Enter name" onChange={this.textChange} id="text"/>
             <span><input type='number' placeholder="Enter price" onChange={this.priceChange} id="price"/>KGS</span>
             <button onClick={this.add}>Add</button>
-            <button onClick={this.totalSpentChange}>Check Total Spent</button>
+            {/*<button onClick={this.totalSpentChange}>Check Total Spent</button>*/}
           </div>
         </div>
         <div className='box'>
