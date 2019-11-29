@@ -50,7 +50,6 @@ class App extends Component {
             <input type="text" placeholder="Enter name" onChange={this.textChange} id="text"/>
             <span><input type='number' placeholder="Enter price" onChange={this.priceChange} id="price"/>KGS</span>
             <button onClick={this.add}>Add</button>
-            {/*<button onClick={this.totalSpentChange}>Check Total Spent</button>*/}
           </div>
         </div>
         <div className='box'>
